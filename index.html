@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Atendimento</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- TELA INICIAL -->
+  <section id="paginaInicial" class="pagina">
+
+    <h1>Home</h1>
+
+    <div class="cards">
+
+      <button class="card" onclick="abrirPagina('prontuario')">
+        Prontuário
+      </button>
+
+      <button class="card" onclick="abrirPagina('financeiro')">
+        Financeiro
+      </button>
+
+      <button class="card" onclick="abrirPagina('agenda')">
+        Agenda
+      </button>
+
+      <button class="card" onclick="abrirPagina('faturamento')">
+        Faturamento
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- TELA DE DETALHES -->
+  <section id="paginaDetalhes" class="pagina escondido">
+
+    <button class="voltar" onclick="voltarInicio()">
+      ← Voltar
+    </button>
+
+    <h1 id="tituloDetalhe"></h1>
+
+    <div id="opcoesDetalhe" class="lista-opcoes"></div>
+
+  </section>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
