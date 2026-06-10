@@ -38,8 +38,8 @@ const camposProntuario = [
   { id: "nomePaciente", label: "Nome do Paciente", tipo: "text" },
   { id: "nomeMae", label: "Nome da Mãe", tipo: "text" },
   { id: "dataNascimento", label: "Data de Nascimento", tipo: "text", placeholder: "dd/mm/aaaa", mascara: "data", max: 10 },
-  { id: "cpf", label: "CPF", tipo: "text", placeholder: "Somente 9 números", mascara: "cpf", max: 9 },
-  { id: "rg", label: "RG", tipo: "text", placeholder: "Somente 8 números", mascara: "rg", max: 8 },
+  { id: "cpf", label: "CPF", tipo: "text", placeholder: "Somente 11 números", mascara: "cpf", max: 11 },
+  { id: "rg", label: "RG", tipo: "text", placeholder: "Somente 9 números", mascara: "rg", max: 9 },
   { id: "numeroProntuario", label: "Número do Prontuário", tipo: "text" }
 ];
 
@@ -126,11 +126,11 @@ function aplicarMascara(input, tipo) {
   }
 
   if (tipo === "cpf") {
-    valor = valor.slice(0, 9);
+    valor = valor.slice(0, 11);
   }
 
   if (tipo === "rg") {
-    valor = valor.slice(0, 8);
+    valor = valor.slice(0, 9);
   }
 
   input.value = valor;
