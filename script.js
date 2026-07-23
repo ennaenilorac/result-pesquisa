@@ -1,9 +1,21 @@
 const dados = {
-  prontuario: { titulo: "Prontuário" },
-  financeiro: { titulo: "Financeiro" },
-  agenda: { titulo: "Agenda" },
-  faturamento: { titulo: "Faturamento" }
+  prontuario: {
+    titulo: "Prontuário"
+  },
+
+  financeiro: {
+    titulo: "Financeiro"
+  },
+
+  agenda: {
+    titulo: "Agenda"
+  },
+
+  faturamento: {
+    titulo: "Faturamento"
+  }
 };
+
 
 const bancoPacientes = [
   {
@@ -14,6 +26,7 @@ const bancoPacientes = [
     rg: "123456789",
     numeroProntuario: "001"
   },
+
   {
     nomePaciente: "Tiago Silva",
     nomeMae: "Maria Silva",
@@ -22,6 +35,7 @@ const bancoPacientes = [
     rg: "123456789",
     numeroProntuario: "002"
   },
+
   {
     nomePaciente: "Ana Caroline",
     nomeMae: "Joceli Valeria",
@@ -32,14 +46,58 @@ const bancoPacientes = [
   }
 ];
 
+
+// Lista que guarda vários pacientes selecionados
+let pacientesSelecionados = [];
+
+
 const camposProntuario = [
-  { id: "nomePaciente", label: "Nome do Paciente", tipo: "text" },
-  { id: "nomeMae", label: "Nome da Mãe", tipo: "text" },
-  { id: "dataNascimento", label: "Data de Nascimento", tipo: "text", placeholder: "dd/mm/aaaa", mascara: "data", max: 10 },
-  { id: "cpf", label: "CPF", tipo: "text", placeholder: "11 números", mascara: "cpf", max: 11 },
-  { id: "rg", label: "RG", tipo: "text", placeholder: "9 números", mascara: "rg", max: 9 },
-  { id: "numeroProntuario", label: "Número do Prontuário", tipo: "text" }
+  {
+    id: "nomePaciente",
+    label: "Nome do Paciente",
+    tipo: "text"
+  },
+
+  {
+    id: "nomeMae",
+    label: "Nome da Mãe",
+    tipo: "text"
+  },
+
+  {
+    id: "dataNascimento",
+    label: "Data de Nascimento",
+    tipo: "text",
+    placeholder: "dd/mm/aaaa",
+    mascara: "data",
+    max: 10
+  },
+
+  {
+    id: "cpf",
+    label: "CPF",
+    tipo: "text",
+    placeholder: "11 números",
+    mascara: "cpf",
+    max: 11
+  },
+
+  {
+    id: "rg",
+    label: "RG",
+    tipo: "text",
+    placeholder: "9 números",
+    mascara: "rg",
+    max: 9
+  },
+
+  {
+    id: "numeroProntuario",
+    label: "Número do Prontuário",
+    tipo: "text"
+  }
 ];
+
 
 function normalizar(texto) {
   return texto
@@ -50,56 +108,121 @@ function normalizar(texto) {
     .trim();
 }
 
+
 function criarCampo(campo) {
   return `
     <div class="campo-prontuario">
-      <label>${campo.label}</label>
+
+      <label for="${campo.id}">
+        ${campo.label}
+      </label>
 
       <input
         type="${campo.tipo}"
         id="${campo.id}"
-        placeholder="${campo.placeholder || "Digite " + campo.label.toLowerCase()}"
-        ${campo.max ? `maxlength="${campo.max}"` : ""}
-        ${campo.mascara ? `oninput="aplicarMascara(this, '${campo.mascara}')"` : ""}
+
+        placeholder="${
+          campo.placeholder ||
+          "Digite " + campo.label.toLowerCase()
+        }"
+
+        ${
+          campo.max
+            ? `maxlength="${campo.max}"`
+            : ""
+        }
+
+        ${
+          campo.mascara
+            ? `oninput="aplicarMascara(this, '${campo.mascara}')"`
+            : ""
+        }
       >
+
     </div>
   `;
 }
 
+
 function abrirPagina(tipo) {
-  const paginaInicial = document.getElementById("paginaInicial");
-  const paginaDetalhes = document.getElementById("paginaDetalhes");
-  const tituloDetalhe = document.getElementById("tituloDetalhe");
-  const opcoesDetalhe = document.getElementById("opcoesDetalhe");
+  const paginaInicial =
+    document.getElementById("paginaInicial");
+
+  const paginaDetalhes =
+    document.getElementById("paginaDetalhes");
+
+  const tituloDetalhe =
+    document.getElementById("tituloDetalhe");
+
+  const opcoesDetalhe =
+    document.getElementById("opcoesDetalhe");
+
 
   paginaInicial.classList.add("escondido");
+
   paginaDetalhes.classList.remove("escondido");
 
-  tituloDetalhe.textContent = dados[tipo].titulo;
+
+  tituloDetalhe.textContent =
+    dados[tipo].titulo;
+
   opcoesDetalhe.innerHTML = "";
 
+
+  // Limpa todos os pacientes selecionados
+  pacientesSelecionados = [];
+
+
+  sessionStorage.removeItem(
+    "pacientesSelecionados"
+  );
+
+
+  sessionStorage.removeItem(
+    "resultadosProntuario"
+  );
+
+
   if (tipo === "prontuario") {
-    const camposHTML = camposProntuario.map(criarCampo).join("");
+    const camposHTML =
+      camposProntuario
+        .map(criarCampo)
+        .join("");
+
 
     opcoesDetalhe.innerHTML = `
       <div class="formulario-prontuario">
-        <h2>Pesquisa de Prontuário</h2>
+
+        <h2>
+          Pesquisa de Prontuário
+        </h2>
 
         <div class="grid-prontuario">
+
           ${camposHTML}
+
         </div>
 
-        <button class="btn-prontuario" onclick="pesquisarProntuario()">
+        <button
+          class="btn-prontuario"
+          onclick="pesquisarProntuario()"
+        >
           Pesquisar Prontuário
         </button>
+
       </div>
     `;
 
     return;
   }
 
+
   opcoesDetalhe.innerHTML = `
-    <button class="opcao">Opção de ${dados[tipo].titulo}</button>
+    <button class="opcao">
+
+      Opção de ${dados[tipo].titulo}
+
+    </button>
   `;
 }
 
@@ -110,9 +233,15 @@ function aplicarMascara(input, tipo) {
     valor = valor.slice(0, 8);
 
     if (valor.length > 4) {
-      valor = valor.replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
+      valor = valor.replace(
+        /(\d{2})(\d{2})(\d{1,4})/,
+        "$1/$2/$3"
+      );
     } else if (valor.length > 2) {
-      valor = valor.replace(/(\d{2})(\d{1,2})/, "$1/$2");
+      valor = valor.replace(
+        /(\d{2})(\d{1,2})/,
+        "$1/$2"
+      );
     }
   }
 
@@ -127,176 +256,483 @@ function aplicarMascara(input, tipo) {
   input.value = valor;
 }
 
+
 function pesquisarProntuario() {
   const busca = {};
 
   camposProntuario.forEach(campo => {
-    busca[campo.id] = document.getElementById(campo.id).value.trim();
+    busca[campo.id] =
+      document
+        .getElementById(campo.id)
+        .value
+        .trim();
   });
 
-  const resultados = bancoPacientes.filter(paciente => {
-    const mesmoNome =
-      normalizar(paciente.nomePaciente).includes(normalizar(busca.nomePaciente)) ||
-      normalizar(busca.nomePaciente).includes(normalizar(paciente.nomePaciente));
 
-    const mesmoNomeMae =
-      busca.nomeMae === "" ||
-      normalizar(paciente.nomeMae).includes(normalizar(busca.nomeMae));
+  const resultados = bancoPacientes.filter(
+    paciente => {
+      const nomePreenchido =
+        busca.nomePaciente !== "";
 
-    const mesmoCpf =
-      busca.cpf === "" || paciente.cpf === busca.cpf;
+      const nomeMaePreenchido =
+        busca.nomeMae !== "";
 
-    const mesmoRg =
-      busca.rg === "" || paciente.rg === busca.rg;
+      const dataPreenchida =
+        busca.dataNascimento !== "";
 
-    const mesmoProntuario =
-      busca.numeroProntuario === "" ||
-      paciente.numeroProntuario === busca.numeroProntuario;
+      const cpfPreenchido =
+        busca.cpf !== "";
 
-    const nomeParecidoComMesmoDocumento =
-      normalizar(paciente.nomePaciente) === normalizar(busca.nomePaciente) &&
-      mesmoNomeMae &&
-      mesmoCpf &&
-      mesmoRg;
+      const rgPreenchido =
+        busca.rg !== "";
 
-    return (
-      mesmoNome ||
-      nomeParecidoComMesmoDocumento ||
-      mesmoCpf ||
-      mesmoRg ||
-      mesmoProntuario
-    );
-  });
+      const prontuarioPreenchido =
+        busca.numeroProntuario !== "";
+
+
+      const mesmoNome =
+        !nomePreenchido ||
+        normalizar(paciente.nomePaciente).includes(
+          normalizar(busca.nomePaciente)
+        ) ||
+        normalizar(busca.nomePaciente).includes(
+          normalizar(paciente.nomePaciente)
+        );
+
+
+      const mesmaMae =
+        !nomeMaePreenchido ||
+        normalizar(paciente.nomeMae).includes(
+          normalizar(busca.nomeMae)
+        );
+
+
+      const mesmaData =
+        !dataPreenchida ||
+        paciente.dataNascimento ===
+          busca.dataNascimento;
+
+
+      const mesmoCpf =
+        !cpfPreenchido ||
+        paciente.cpf === busca.cpf;
+
+
+      const mesmoRg =
+        !rgPreenchido ||
+        paciente.rg === busca.rg;
+
+
+      const mesmoProntuario =
+        !prontuarioPreenchido ||
+        paciente.numeroProntuario ===
+          busca.numeroProntuario;
+
+
+      return (
+        mesmoNome &&
+        mesmaMae &&
+        mesmaData &&
+        mesmoCpf &&
+        mesmoRg &&
+        mesmoProntuario
+      );
+    }
+  );
+
 
   mostrarResultados(resultados);
 }
 
-function mostrarResultados(resultados) {
-  const tituloDetalhe = document.getElementById("tituloDetalhe");
-  const opcoesDetalhe = document.getElementById("opcoesDetalhe");
 
-  tituloDetalhe.textContent = "Resultados Encontrados";
+function mostrarResultados(resultados) {
+  const tituloDetalhe =
+    document.getElementById("tituloDetalhe");
+
+  const opcoesDetalhe =
+    document.getElementById("opcoesDetalhe");
+
+
+  tituloDetalhe.textContent =
+    "Resultados Encontrados";
+
+
+  // Limpa as seleções anteriores
+  pacientesSelecionados = [];
+
+
+  sessionStorage.setItem(
+    "resultadosProntuario",
+    JSON.stringify(resultados)
+  );
+
 
   if (resultados.length === 0) {
     opcoesDetalhe.innerHTML = `
       <div class="resultado-prontuario">
+
         <div class="item">
-          <strong>Nenhum prontuário encontrado</strong>
-          <p>Tente pesquisar novamente com outro dado.</p>
+
+          <strong>
+            Nenhum prontuário encontrado
+          </strong>
+
+          <p>
+            Tente pesquisar novamente com outros dados.
+          </p>
+
         </div>
 
-        <button class="btn-voltar-pesquisa" onclick="abrirPagina('prontuario')">
+        <button
+          class="btn-voltar-pesquisa"
+          onclick="abrirPagina('prontuario')"
+        >
           Voltar para Pesquisa
         </button>
+
       </div>
     `;
+
     return;
   }
 
-  const cards = resultados.map((paciente, index) => `
-    <div class="card-resultado">
-      <h3>${paciente.nomePaciente}</h3>
-      <p><b>Nome da mãe:</b> ${paciente.nomeMae}</p>
-      <p><b>Data de nascimento:</b> ${paciente.dataNascimento}</p>
-      <p><b>CPF:</b> ${paciente.cpf}</p>
-      <p><b>RG:</b> ${paciente.rg}</p>
-      <p><b>Número do prontuário:</b> ${paciente.numeroProntuario}</p>
 
-      <button onclick="escolherPaciente(${index})">
-        Escolher este paciente
-      </button>
-    </div>
-  `).join("");
+  const cards = resultados.map(
+    (paciente, index) => `
+      <div
+        class="card-resultado"
+        id="card-paciente-${index}"
+      >
 
-  sessionStorage.setItem("resultadosProntuario", JSON.stringify(resultados));
+        <div class="cabecalho-paciente">
+
+          <h3>
+            ${paciente.nomePaciente}
+          </h3>
+
+          <div class="check-paciente">
+
+            <input
+              type="checkbox"
+              id="paciente-${index}"
+              name="pacientesSelecionados"
+              aria-label="Selecionar prontuário de ${paciente.nomePaciente}"
+              onchange="selecionarPaciente(${index})"
+            >
+
+            <span>
+              Escolher<br>
+              Prontuário
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <p>
+          <b>Nome da mãe:</b>
+          ${paciente.nomeMae}
+        </p>
+
+        <p>
+          <b>Data de nascimento:</b>
+          ${paciente.dataNascimento}
+        </p>
+
+        <p>
+          <b>CPF:</b>
+          ${paciente.cpf}
+        </p>
+
+        <p>
+          <b>RG:</b>
+          ${paciente.rg}
+        </p>
+
+        <p>
+          <b>Número do prontuário:</b>
+          ${paciente.numeroProntuario}
+        </p>
+
+      </div>
+    `
+  ).join("");
+
 
   opcoesDetalhe.innerHTML = `
     <div class="lista-resultados">
+
       ${cards}
+
+    </div>
+
+    <div class="botoes-final">
+
+      <button
+        class="btn-voltar-pesquisa"
+        onclick="abrirPagina('prontuario')"
+      >
+        Voltar para Pesquisa
+      </button>
+
+      <button
+        class="btn-gerar-prontuario"
+        onclick="abrirProntuariosSelecionados()"
+      >
+        Abrir Prontuários Selecionados
+      </button>
+
     </div>
   `;
 }
 
-function escolherPaciente(index) {
-  const resultados = JSON.parse(sessionStorage.getItem("resultadosProntuario"));
-  const paciente = resultados[index];
+function selecionarPaciente(index) {
+  const checkbox =
+    document.getElementById(`paciente-${index}`);
 
-  const tituloDetalhe = document.getElementById("tituloDetalhe");
-  const opcoesDetalhe = document.getElementById("opcoesDetalhe");
+  const card =
+    document.getElementById(`card-paciente-${index}`);
 
-  tituloDetalhe.textContent = "Prontuário Selecionado";
 
-  opcoesDetalhe.innerHTML = `
-    <div class="resultado-prontuario">
-      <div class="item">
-        <strong>Prontuário do Paciente</strong>
+  if (checkbox.checked) {
+    if (!pacientesSelecionados.includes(index)) {
+      pacientesSelecionados.push(index);
+    }
 
-        <p><b>Nome do paciente:</b> ${paciente.nomePaciente}</p>
-        <p><b>Nome da mãe:</b> ${paciente.nomeMae}</p>
-        <p><b>Data de nascimento:</b> ${paciente.dataNascimento}</p>
-        <p><b>CPF:</b> ${paciente.cpf}</p>
-        <p><b>RG:</b> ${paciente.rg}</p>
-        <p><b>Número do prontuário:</b> ${paciente.numeroProntuario}</p>
-      </div>
+    if (card) {
+      card.classList.add("selecionado");
+    }
+  } else {
+    pacientesSelecionados =
+      pacientesSelecionados.filter(
+        indice => indice !== index
+      );
 
-      <div class="botoes-final">
-        <button class="btn-voltar-pesquisa" onclick="abrirPagina('prontuario')">
-          Voltar para Pesquisa
-        </button>
+    if (card) {
+      card.classList.remove("selecionado");
+    }
+  }
 
-        <button class="btn-gerar-prontuario" onclick="gerarProntuario()">
-          Gerar Prontuário
-        </button>
-      </div>
-    </div>
-  `;
+
+  sessionStorage.setItem(
+    "indicesPacientesSelecionados",
+    JSON.stringify(pacientesSelecionados)
+  );
 }
 
-function gerarProntuario() {
 
-  const resultados =
-    JSON.parse(
-      sessionStorage.getItem("resultadosProntuario")
+function abrirProntuariosSelecionados() {
+  if (pacientesSelecionados.length === 0) {
+    alert(
+      "Selecione pelo menos um prontuário."
     );
 
-  const paciente =
-    resultados[0];
+    return;
+  }
 
-  sessionStorage.setItem(
-    "nomePaciente",
-    paciente.nomePaciente
+
+  const resultados = JSON.parse(
+    sessionStorage.getItem(
+      "resultadosProntuario"
+    )
   );
 
-  sessionStorage.setItem(
-    "nomeMae",
-    paciente.nomeMae
-  );
+
+  if (!resultados) {
+    alert(
+      "Não foi possível carregar os resultados."
+    );
+
+    return;
+  }
+
+
+  const prontuariosEscolhidos =
+    pacientesSelecionados
+      .map(index => resultados[index])
+      .filter(paciente => paciente);
+
+
+  if (prontuariosEscolhidos.length === 0) {
+    alert(
+      "Nenhum prontuário válido foi selecionado."
+    );
+
+    return;
+  }
+
 
   sessionStorage.setItem(
-    "dataNascimento",
-    paciente.dataNascimento
+    "pacientesSelecionados",
+    JSON.stringify(prontuariosEscolhidos)
   );
 
-  sessionStorage.setItem(
-    "cpf",
-    paciente.cpf
+
+  mostrarProntuariosSelecionados(
+    prontuariosEscolhidos
+  );
+}
+
+
+function mostrarProntuariosSelecionados(
+  pacientes
+) {
+  const tituloDetalhe =
+    document.getElementById("tituloDetalhe");
+
+  const opcoesDetalhe =
+    document.getElementById("opcoesDetalhe");
+
+
+  tituloDetalhe.textContent =
+    "Prontuários Selecionados";
+
+
+  const cardsSelecionados =
+    pacientes.map(
+      paciente => `
+        <div class="card-resultado selecionado">
+
+          <h3>
+            ${paciente.nomePaciente}
+          </h3>
+
+          <p>
+            <b>Nome da mãe:</b>
+            ${paciente.nomeMae}
+          </p>
+
+          <p>
+            <b>Data de nascimento:</b>
+            ${paciente.dataNascimento}
+          </p>
+
+          <p>
+            <b>CPF:</b>
+            ${paciente.cpf}
+          </p>
+
+          <p>
+            <b>RG:</b>
+            ${paciente.rg}
+          </p>
+
+          <p>
+            <b>Número do prontuário:</b>
+            ${paciente.numeroProntuario}
+          </p>
+
+        </div>
+      `
+    ).join("");
+
+
+  opcoesDetalhe.innerHTML = `
+    <div class="lista-resultados">
+
+      ${cardsSelecionados}
+
+    </div>
+
+
+    <div class="botoes-final">
+
+      <button
+        class="btn-voltar-pesquisa"
+        onclick="abrirPagina('prontuario')"
+      >
+        Voltar para Pesquisa
+      </button>
+
+
+      <button
+        class="btn-gerar-prontuario"
+        onclick="gerarProntuarios()"
+      >
+        Gerar Prontuários
+      </button>
+
+    </div>
+  `;
+}
+
+
+function gerarProntuarios() {
+  const pacientes = JSON.parse(
+    sessionStorage.getItem(
+      "pacientesSelecionados"
+    )
   );
 
-  sessionStorage.setItem(
-    "rg",
-    paciente.rg
-  );
+
+  if (!pacientes || pacientes.length === 0) {
+    alert(
+      "Nenhum prontuário foi selecionado."
+    );
+
+    return;
+  }
+
 
   sessionStorage.setItem(
-    "numeroProntuario",
-    paciente.numeroProntuario
+    "pacientesParaGerar",
+    JSON.stringify(pacientes)
   );
+
 
   window.location.href =
     "prontuario.html";
 }
 
 function voltarInicio() {
-  document.getElementById("paginaDetalhes").classList.add("escondido");
-  document.getElementById("paginaInicial").classList.remove("escondido");
+
+  document
+    .getElementById("paginaDetalhes")
+    .classList.add("escondido");
+
+  document
+    .getElementById("paginaInicial")
+    .classList.remove("escondido");
+
+
+  // Limpa todas as seleções
+  pacientesSelecionados = [];
+
+
+  // Limpa dados temporários
+  sessionStorage.removeItem(
+    "resultadosProntuario"
+  );
+
+  sessionStorage.removeItem(
+    "pacientesSelecionados"
+  );
+
+  sessionStorage.removeItem(
+    "pacientesParaGerar"
+  );
+
+  sessionStorage.removeItem(
+    "indicesPacientesSelecionados"
+  );
+
+
+  // Desmarca todos os checkboxes
+  document
+    .querySelectorAll(
+      'input[name="pacientesSelecionados"]'
+    )
+    .forEach(checkbox => {
+      checkbox.checked = false;
+    });
+
+
+  // Remove o destaque dos cartões
+  document
+    .querySelectorAll(".card-resultado")
+    .forEach(card => {
+      card.classList.remove("selecionado");
+    });
+
 }

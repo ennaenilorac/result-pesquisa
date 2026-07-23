@@ -7,7 +7,14 @@
 
 body {
   min-height: 100vh;
-  background: linear-gradient(135deg, #3b2416, #5c3a24, #6f4e37, #8b5e3c, #a47551);
+  background: linear-gradient(
+    135deg,
+    #3b2416,
+    #5c3a24,
+    #6f4e37,
+    #8b5e3c,
+    #a47551
+  );
   color: #fff8f0;
 }
 
@@ -41,14 +48,18 @@ h1 {
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
 .card:hover {
-  background: linear-gradient(135deg, #5c3a24, #8b5e3c);
+  background: linear-gradient(
+    135deg,
+    #5c3a24,
+    #8b5e3c
+  );
   color: white;
   transform: translateY(-6px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.35);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
 }
 
 .voltar {
@@ -70,19 +81,21 @@ h1 {
   display: none;
 }
 
+/* FORMULÁRIO DE PESQUISA */
+
 .formulario-prontuario {
   max-width: 900px;
   margin: 0 auto;
-  background: rgba(255,248,240,0.95);
   padding: 35px;
   border-radius: 20px;
+  background: rgba(255, 248, 240, 0.95);
   text-align: left;
 }
 
 .formulario-prontuario h2 {
-  text-align: center;
-  color: #5c3a24;
   margin-bottom: 30px;
+  color: #5c3a24;
+  text-align: center;
 }
 
 .grid-prontuario {
@@ -93,9 +106,9 @@ h1 {
 
 .campo-prontuario label {
   display: block;
+  margin-bottom: 5px;
   color: #3b2416;
   font-weight: bold;
-  margin-bottom: 5px;
 }
 
 .campo-prontuario input {
@@ -104,6 +117,12 @@ h1 {
   border: 1px solid #d4c1af;
   border-radius: 8px;
   font-size: 16px;
+}
+
+.campo-prontuario input:focus {
+  border-color: #8b5e3c;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(139, 94, 60, 0.18);
 }
 
 .btn-prontuario {
@@ -117,59 +136,143 @@ h1 {
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .btn-prontuario:hover {
   background: #8b5e3c;
+  transform: translateY(-2px);
 }
+
+/* LISTA DE RESULTADOS */
 
 .lista-resultados {
-  max-width: 1000px;
-  margin: 0 auto;
   display: grid;
   gap: 25px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
+
+/* CARTÃO DO PACIENTE */
 
 .card-resultado {
-  background: linear-gradient(135deg, #ffffff, #fff8f0, #f0dfcf);
-  color: #3b2416;
-  padding: 30px;
-  border-radius: 20px;
+  position: relative;
+  margin-bottom: 25px;
+  padding: 25px;
+  border: 1px solid #d8c0a8;
   border-left: 10px solid #8b5e3c;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    #ffffff,
+    #fff8f0,
+    #f5e6d3
+  );
+  color: #3b2416;
   text-align: left;
+  box-shadow: 0 6px 18px rgba(59, 36, 22, 0.18);
+  transition: all 0.25s ease;
 }
 
-.card-resultado h3 {
-  text-align: center;
-  color: #5c3a24;
-  font-size: 32px;
-  margin-bottom: 25px;
+.card-resultado:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(59, 36, 22, 0.28);
+}
+
+/* CARTÃO SELECIONADO */
+
+.card-resultado.selecionado {
+  border: 3px solid #6f4e37;
+  border-left: 10px solid #6f4e37;
+  background: linear-gradient(
+    135deg,
+    #fffdf9,
+    #f6eadc
+  );
+  box-shadow: 0 0 18px rgba(111, 78, 55, 0.35);
+  transform: scale(1.01);
+}
+
+/* CABEÇALHO COM NOME E CHECKBOX */
+
+.cabecalho-paciente {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
   padding-bottom: 10px;
   border-bottom: 2px solid #d8c0a8;
 }
 
-.card-resultado p {
-  font-size: 18px;
-  margin-bottom: 12px;
-  color: #3b2416;
+.cabecalho-paciente h3 {
+  flex: 1;
+  margin: 0;
+  color: #5c3a24;
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
 }
 
-.card-resultado button {
-  display: block;
-  margin: 25px auto 0;
-  padding: 14px 30px;
-  border: none;
-  border-radius: 10px;
-  background: #5c3a24;
-  color: white;
-  font-weight: bold;
+/* ÁREA DO CHECKBOX */
+
+.check-paciente {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 100px;
+  gap: 6px;
+}
+
+.check-paciente input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: #6f4e37;
   cursor: pointer;
 }
 
-.card-resultado button:hover {
-  background: #8b5e3c;
+.check-paciente span {
+  color: #5c3a24;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 16px;
+  text-align: center;
 }
+
+/* INFORMAÇÕES DO PACIENTE */
+
+.card-resultado p {
+  margin: 10px 0;
+  color: #3b2416;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* BOTÃO DENTRO DO CARTÃO, CASO EXISTA */
+
+.card-resultado button {
+  display: block;
+  min-width: 220px;
+  margin: 25px auto 0;
+  padding: 13px 24px;
+  border: none;
+  border-radius: 10px;
+  background: #6f4e37;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.card-resultado button:hover {
+  background: #5c3a24;
+  transform: translateY(-2px);
+}
+
+/* RESULTADO DO PRONTUÁRIO */
 
 .resultado-prontuario {
   max-width: 900px;
@@ -177,63 +280,123 @@ h1 {
 }
 
 .resultado-prontuario .item {
-  background: linear-gradient(135deg, #ffffff, #fff8f0, #f0dfcf);
-  color: #3b2416;
   padding: 30px;
-  border-radius: 20px;
   border-left: 10px solid #8b5e3c;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    #ffffff,
+    #fff8f0,
+    #f0dfcf
+  );
+  color: #3b2416;
   text-align: left;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
 
 .resultado-prontuario .item strong {
   display: block;
-  font-size: 30px;
-  color: #5c3a24;
   margin-bottom: 20px;
   padding-bottom: 10px;
   border-bottom: 2px solid #d8c0a8;
+  color: #5c3a24;
+  font-size: 30px;
 }
 
 .resultado-prontuario .item p {
   margin-bottom: 12px;
-  font-size: 18px;
   color: #3b2416;
+  font-size: 18px;
 }
+
+/* BOTÕES INFERIORES */
 
 .botoes-final {
   display: flex;
-  gap: 30px;
-  margin-top: 25px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: auto;
+  max-width: 600px;
+  margin: 25px auto 0;
 }
 
 .btn-voltar-pesquisa,
 .btn-gerar-prontuario {
-  flex: 1;
-  padding: 15px;
+  width: 240px;
+  max-width: 240px;
+  padding: 12px 20px;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-voltar-pesquisa {
+  border: 2px solid #5c3a24;
+  background: white;
+  color: #5c3a24;
+}
+
+.btn-voltar-pesquisa:hover {
+  background: #f5d7b7;
+  transform: translateY(-2px);
+}
+
+.btn-gerar-prontuario {
+  border: 2px solid #5c3a24;
+  background: #5c3a24;
+  color: white;
+}
+
+.btn-gerar-prontuario:hover {
+  border-color: #8b5e3c;
+  background: #8b5e3c;
+  transform: translateY(-2px);
+}
+
+/* SELEÇÃO ANTIGA, CASO AINDA EXISTA NO HTML */
+
+.selecao-paciente {
+  margin-top: 20px;
+  padding: 14px;
+  border: 1px solid #d8c0a8;
+  border-radius: 10px;
+  background: #fff8f0;
+}
+
+.selecao-paciente label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #5c3a24;
+  font-size: 17px;
   font-weight: bold;
   cursor: pointer;
 }
 
-.btn-voltar-pesquisa {
-  background: white;
-  color: #5c3a24;
-  border: 2px solid #5c3a24;
+.selecao-paciente input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #5c3a24;
+  cursor: pointer;
 }
 
-.btn-gerar-prontuario {
-  background: #5c3a24;
-  color: white;
-  border: none;
-}
+/* TABLET */
 
 @media (max-width: 900px) {
   .cards {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .pagina {
+    padding: 35px;
+  }
 }
+
+/* CELULAR */
 
 @media (max-width: 600px) {
   .cards {
@@ -241,14 +404,58 @@ h1 {
   }
 
   .pagina {
-    padding: 25px;
+    padding: 25px 15px;
   }
 
   h1 {
     font-size: 35px;
   }
 
+  .formulario-prontuario {
+    padding: 22px 18px;
+  }
+
+  .card-resultado {
+    padding: 18px;
+    border-left-width: 6px;
+  }
+
+  .cabecalho-paciente {
+    gap: 10px;
+  }
+
+  .cabecalho-paciente h3 {
+    font-size: 24px;
+    text-align: left;
+  }
+
+  .check-paciente {
+    min-width: 80px;
+  }
+
+  .check-paciente span {
+    font-size: 12px;
+  }
+
+  .card-resultado p {
+    font-size: 15px;
+  }
+
+  .card-resultado button {
+    width: 100%;
+    min-width: 0;
+  }
+
   .botoes-final {
     flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .btn-voltar-pesquisa,
+  .btn-gerar-prontuario {
+    width: 100%;
+    max-width: 300px;
   }
 }
